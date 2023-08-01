@@ -3,8 +3,8 @@ package client
 import (
 	"sync"
 	"time"
-	"tinyrpc/network/transport"
-	_net "tinyrpc/network/transport/net"
+	"xrpc/network/transport"
+	_net "xrpc/network/transport/net"
 )
 
 type Client interface {
