@@ -31,7 +31,7 @@ type Registry interface {
 	Name() string
 }
 
-func GetRegistry(nameServiceUri string) (Registry, error) {
+func NewRegistry(nameServiceUri string) (Registry, error) {
 	u, err := url.Parse(nameServiceUri)
 	if err != nil {
 		return nil, err
