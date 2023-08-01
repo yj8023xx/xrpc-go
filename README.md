@@ -2,8 +2,6 @@
 
 [xRPC](https://github.com/yj8023xx/xrpc) 的 Go 实现：一个轻量级、高吞吐、低延迟的 RPC 框架
 
-后续将会添加跨语言支持
-
 
 
 ## 案例
