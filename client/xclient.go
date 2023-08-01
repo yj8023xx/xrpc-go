@@ -3,10 +3,12 @@ package client
 import (
 	"github.com/google/uuid"
 	"net/url"
-	"tinyrpc/network/codec"
-	"tinyrpc/network/protocol"
-	"tinyrpc/network/transport"
-	"tinyrpc/registry"
+	"reflect"
+	"strings"
+	"xrpc/network/codec"
+	"xrpc/network/protocol"
+	"xrpc/network/transport"
+	"xrpc/registry"
 )
 
 type XClient interface {
@@ -21,13 +23,32 @@ type xClient struct {
 	payloadCodec codec.PayloadCodec
 }
 
+func firstLower(s string) string {
+	if s == "" {
+		return ""
+	}
+	return strings.ToLower(s[:1]) + s[1:]
+}
+
+func convertToMap(s interface{}) map[string]interface{} {
+	t := reflect.TypeOf(s).Elem()
+	v := reflect.ValueOf(s).Elem()
+	m := make(map[string]interface{})
+	for i := 0; i < t.NumField(); i++ {
+		field := t.Field(i)
+		value := v.Field(i).Interface()
+		m[firstLower(field.Name)] = value
+	}
+	return m
+}
+
 // Go invokes the function asynchronously. It returns the Call structure representing the invocation.
 // The done channel will signal when the call is complete by returning the same Call object.
 func (c *xClient) Go(methodName string, args, reply interface{}) *transport.Call {
 	rpcRequest := protocol.RpcRequestPayload{
 		ServiceName: c.serviceName,
-		MethodName:  methodName,
-		Args:        args,
+		MethodName:  firstLower(methodName),
+		ArgMap:      convertToMap(args),
 	}
 	payload, _ := c.payloadCodec.Marshal(rpcRequest)
 	uuid, _ := uuid.NewUUID()
