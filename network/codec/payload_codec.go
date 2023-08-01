@@ -5,13 +5,11 @@ import (
 )
 
 const (
-	JsonName    string = "json"
-	HessianName string = "hessian"
+	JsonName string = "json"
 )
 
 const (
 	Json = iota
-	Hessian
 )
 
 var payloadMap = make(map[string]PayloadCodec)
