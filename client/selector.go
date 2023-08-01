@@ -2,7 +2,7 @@ package client
 
 import (
 	"github.com/bytedance/gopkg/lang/fastrand"
-	"tinyrpc/network/transport"
+	"xrpc/network/transport"
 )
 
 const (
