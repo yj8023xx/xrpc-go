@@ -2,13 +2,21 @@ package server
 
 import (
 	"reflect"
-	"tinyrpc/network/codec"
-	"tinyrpc/network/protocol"
-	"tinyrpc/network/transport"
+	"strings"
+	"xrpc/network/codec"
+	"xrpc/network/protocol"
+	"xrpc/network/transport"
 )
 
 type RpcRequestHandler struct {
 	serviceMap map[string]*service
+}
+
+func firstUpper(s string) string {
+	if s == "" {
+		return ""
+	}
+	return strings.ToUpper(s[:1]) + s[1:]
 }
 
 func (h *RpcRequestHandler) Handle(message *protocol.Message) (*protocol.Message, error) {
@@ -18,13 +26,12 @@ func (h *RpcRequestHandler) Handle(message *protocol.Message) (*protocol.Message
 	rpcRequest := &protocol.RpcRequestPayload{}
 	payloadCodec.Unmarshal(message.Payload, rpcRequest)
 	service := h.serviceMap[rpcRequest.ServiceName]
-	serviceMethod := service.methodMap[rpcRequest.MethodName]
+	serviceMethod := service.methodMap[firstUpper(rpcRequest.MethodName)]
 	argv := reflect.New(serviceMethod.argsType)
-	kvPairs := rpcRequest.Args.(map[string]interface{})
+	kvPairs := rpcRequest.ArgMap
 	for name, value := range kvPairs {
-		argv.Elem().FieldByName(name).Set(reflect.ValueOf(value))
+		argv.Elem().FieldByName(firstUpper(name)).Set(reflect.ValueOf(value))
 	}
-	//argv.Elem().Set(reflect.ValueOf(rpcRequest.Args))
 	replv := reflect.New(serviceMethod.replyType)
 	service.call(serviceMethod, argv, replv)
 	payload, err := payloadCodec.Marshal(replv.Interface())
