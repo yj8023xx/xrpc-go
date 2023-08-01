@@ -1,7 +1,7 @@
 package transport
 
 import (
-	"tinyrpc/network/protocol"
+	"xrpc/network/protocol"
 )
 
 type TransHandler interface {

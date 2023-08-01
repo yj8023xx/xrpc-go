@@ -3,7 +3,7 @@ package transport
 import (
 	"sync"
 	"time"
-	"tinyrpc/network/protocol"
+	"xrpc/network/protocol"
 )
 
 type TransClient interface {

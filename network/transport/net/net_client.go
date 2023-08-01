@@ -5,9 +5,9 @@ import (
 	"net"
 	"sync"
 	"time"
-	"tinyrpc/network/codec"
-	"tinyrpc/network/protocol"
-	"tinyrpc/network/transport"
+	"xrpc/network/codec"
+	"xrpc/network/protocol"
+	"xrpc/network/transport"
 )
 
 type netClient struct {

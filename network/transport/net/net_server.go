@@ -3,9 +3,9 @@ package net
 import (
 	"io"
 	"net"
-	"tinyrpc/network/codec"
-	"tinyrpc/network/protocol"
-	"tinyrpc/network/transport"
+	"xrpc/network/codec"
+	"xrpc/network/protocol"
+	"xrpc/network/transport"
 )
 
 type netServer struct {
