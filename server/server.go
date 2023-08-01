@@ -2,10 +2,14 @@ package server
 
 import (
 	"net"
-	"tinyrpc/network/protocol"
-	"tinyrpc/network/transport"
-	_net "tinyrpc/network/transport/net"
-	"tinyrpc/registry"
+	"xrpc/network/protocol"
+	"xrpc/network/transport"
+	_net "xrpc/network/transport/net"
+	"xrpc/registry"
+)
+
+const (
+	serviceNamePrefix = "com.smallc.xrpc"
 )
 
 type Server interface {
@@ -38,7 +42,7 @@ func (s *server) AddService(serviceName string, rcvr interface{}) {
 }
 
 func NewServer(port string, nameServiceUri string) (Server, error) {
-	registry, err := registry.GetRegistry(nameServiceUri)
+	registry, err := registry.NewRegistry(nameServiceUri)
 	if err != nil {
 		return nil, err
 	}
