@@ -1,7 +1,7 @@
 package codec
 
 import (
-	"tinyrpc/network/protocol"
+	"xrpc/network/protocol"
 )
 
 type HeaderCodec interface {
@@ -20,7 +20,8 @@ func (c *headerCodec) Encode(header *protocol.Header) ([]byte, error) {
 	WriteUint16(header.TotalLength, byteBuffer)
 	WriteByte(header.MessageTypeId, byteBuffer)
 	WriteByte(header.SerializationId, byteBuffer)
-	WriteUint32(header.RequestId, byteBuffer)
+	WriteUint64(header.RequestId, byteBuffer)
+	WriteByte(header.Status, byteBuffer)
 	return byteBuffer.Bytes()
 }
 
@@ -32,7 +33,8 @@ func (c *headerCodec) Decode(in []byte, header *protocol.Header) error {
 	header.TotalLength, _ = ReadUint16(byteBuffer)
 	header.MessageTypeId, _ = ReadByte(byteBuffer)
 	header.SerializationId, _ = ReadByte(byteBuffer)
-	header.RequestId, _ = ReadUint32(byteBuffer)
+	header.RequestId, _ = ReadUint64(byteBuffer)
+	header.Status, _ = ReadByte(byteBuffer)
 	return nil
 }
 

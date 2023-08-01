@@ -3,7 +3,7 @@ package codec
 import (
 	"bytes"
 	"io"
-	"tinyrpc/network/protocol"
+	"xrpc/network/protocol"
 )
 
 type MessageCodec interface {
