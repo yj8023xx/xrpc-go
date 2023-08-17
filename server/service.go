@@ -2,6 +2,7 @@ package server
 
 import (
 	"go/ast"
+	"log"
 	"reflect"
 )
 
@@ -28,7 +29,7 @@ func NewService(rcvr interface{}) *service {
 	s.typ = reflect.TypeOf(rcvr)
 	s.name = reflect.Indirect(s.rcvr).Type().Name()
 	if !ast.IsExported(s.name) {
-
+		log.Fatalf("%s is not a valid service name.", s.name)
 	}
 	s.registerMethods()
 	return s
