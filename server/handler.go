@@ -28,8 +28,8 @@ func (h *RpcRequestHandler) Handle(message *protocol.Message) (*protocol.Message
 	service := h.serviceMap[rpcRequest.ServiceName]
 	serviceMethod := service.methodMap[firstUpper(rpcRequest.MethodName)]
 	argv := reflect.New(serviceMethod.argsType)
-	kvPairs := rpcRequest.ArgMap
-	for name, value := range kvPairs {
+	argMap := rpcRequest.ArgMap
+	for name, value := range argMap {
 		argv.Elem().FieldByName(firstUpper(name)).Set(reflect.ValueOf(value))
 	}
 	replv := reflect.New(serviceMethod.replyType)
