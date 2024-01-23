@@ -1,12 +1,12 @@
 # xRPC-Go
 
-[xRPC](https://github.com/yj8023xx/xrpc) 的 Go 实现：一个轻量级、高吞吐、低延迟的 RPC 框架
+[xRPC](https://github.com/yj8023xx/xrpc) has been implemented in Go, providing a lightweight, high-throughput, low-latency RPC framework.
 
 
 
-## 案例
+## Example
 
-**客户端**
+**Client**
 
 ```go
 type Args struct {
@@ -26,7 +26,7 @@ func main() {
 }
 ```
 
-**服务端**
+**Server**
 
 ```go
 type Args struct {
@@ -46,4 +46,3 @@ func main() {
 	s.Start()
 }
 ```
-
